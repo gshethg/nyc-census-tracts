@@ -1,0 +1,33 @@
+---
+title: "Census Track"
+author: "Gitanjali Sheth"
+format: html
+execute: 
+  echo: false
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(ggbeeswarm)
+```
+
+```{r}
+#| label: loaddata
+
+x <- read_csv("data/nyc_tracts.csv", show_col_types = FALSE)
+x |> 
+  drop_na() |> 
+  ggplot(aes(x = med_income, y = race, color = med_income)) +
+    geom_quasirandom(orientation = "y") +
+    scale_color_viridis_c(guide = "none") +
+    scale_x_continuous(labels = scales::dollar_format()) +
+    labs(title = "Household income distribution by largest racial/ethnic group",
+       subtitle = "Census tracts, New York City",
+       x = "Median household income",
+       y = NULL)
+```
+
+
